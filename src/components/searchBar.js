@@ -6,7 +6,6 @@ const SearchBar = () => {
 
     const dispatch = useDispatch();
 
-    // const [name, setName] = useState();
     const [inputs, setInputs] = useState({
         name: "",
         sortBy: "asc",
@@ -22,8 +21,6 @@ const SearchBar = () => {
         dispatch(listAllBooks(inputs?.name, inputs?.sortBy, inputs?.race, inputs?.gender))
     }
 
-    
-
     const handleChange = (e) => {
         let value = Array.from(
             e.target.selectedOptions,
@@ -31,10 +28,6 @@ const SearchBar = () => {
           );
           setInputs({ ...inputs, race: value })      
     }
-
-    useEffect(() => {
-        console.log("chosen: "+ inputs?.race)
-    }, [inputs?.race])
 
     return (
         <div className="search-bar">
@@ -45,6 +38,7 @@ const SearchBar = () => {
                         type="text"
                         name="search"
                         value={inputs?.name}
+                        className="search-bar-box"
                         onChange={(e) => setInputs({ ...inputs, name: e.target.value })}
                         placeholder="Search by name: "
                     >
@@ -58,6 +52,7 @@ const SearchBar = () => {
                         id="sortBy"
                         placeholder="By name (asc/desc)"
                         value={inputs?.sortBy}
+                        className="search-bar-box"
                         onChange={(e) => setInputs({ ...inputs, sortBy: e.target.value })}
                     >
                         <option>By name (asc/desc)</option>
@@ -69,12 +64,10 @@ const SearchBar = () => {
             <div className='second-row'>
                 <div>
                     <label htmlFor="race">Race: </label>
-
                     <select
                         name="race"
                         value={inputs?.race}
                         onChange={handleChange}
-                        // onChange={(e) => setInputs({ ...inputs, race: e.target.value})}
                         id="race"
                         placeholder="list of race, multiselection"
                         multiple={true}
@@ -87,11 +80,11 @@ const SearchBar = () => {
                 </div>
                 <div>
                     <label htmlFor="cars">Gender: </label>
-
                     <select 
                     name="gender" 
                     id="cars" 
                     placeholder="male/female/any"
+                    className='search-bar-box'
                     value={inputs?.gender}
                     onChange={(e) => setInputs({ ...inputs, gender: e.target.value })}
                     >
@@ -101,7 +94,7 @@ const SearchBar = () => {
                         <option value="">Any</option>
                     </select>
                 </div>
-                <button onClick={findCustomizedCharacters}>Submit</button>
+                <button onClick={findCustomizedCharacters} className="submit-btn">Submit</button>
             </div>
         </div>
     )

@@ -4,28 +4,31 @@ import Header from './components/header';
 import SearchBar from './components/searchBar';
 import { connect } from 'react-redux';
 import TableBody from './components/tableBody';
+import CharacterDetails from './components/characterDetails';
+import Home from './components/home';
+import { Switch, Route, BrowserRouter } from "react-router-dom";
 
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <SearchBar />
-      <TableBody />
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
+
+      <BrowserRouter>
+
+        <Switch>
+
+          <Route exact path="/">
+            <Home />
+          </Route>
+
+          <Route exact path="/details/:id">
+            <CharacterDetails />
+          </Route>
+
+        </Switch>
+
+      </BrowserRouter>
     </div>
   );
 }
