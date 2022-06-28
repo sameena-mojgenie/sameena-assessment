@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from 'react'
+import React, { useState, useEffect } from 'react'
 import { listAllBooks } from '../redux/actions/listingActions'
 import { useDispatch } from 'react-redux'
 
@@ -11,15 +11,30 @@ const SearchBar = () => {
         name: "",
         sortBy: "asc",
         race: "",
+        gender: "",
     })
 
     useEffect(() => {
-        dispatch(listAllBooks("", "", ""));
-      }, [])
+        dispatch(listAllBooks("", "", "", ""));
+    }, [])
 
     const findCustomizedCharacters = () => {
-        dispatch(listAllBooks(inputs?.name, inputs?.sortBy, inputs?.race))
+        dispatch(listAllBooks(inputs?.name, inputs?.sortBy, inputs?.race, inputs?.gender))
     }
+
+    
+
+    const handleChange = (e) => {
+        let value = Array.from(
+            e.target.selectedOptions,
+            (option) => option.value
+          );
+          setInputs({ ...inputs, race: value })      
+    }
+
+    useEffect(() => {
+        console.log("chosen: "+ inputs?.race)
+    }, [inputs?.race])
 
     return (
         <div className="search-bar">
@@ -30,7 +45,7 @@ const SearchBar = () => {
                         type="text"
                         name="search"
                         value={inputs?.name}
-                        onChange={(e) => setInputs({ ...inputs, name : e.target.value})}
+                        onChange={(e) => setInputs({ ...inputs, name: e.target.value })}
                         placeholder="Search by name: "
                     >
                     </input>
@@ -38,16 +53,16 @@ const SearchBar = () => {
 
                 <div>
                     <label>Sort By:  </label>
-                    <select 
-                    name="sortBy" 
-                    id="sortBy" 
-                    placeholder="By name (asc/desc)"
-                    value={inputs?.sortBy}
-                    onChange={(e) => setInputs({ ...inputs, sortBy: e.target.value})}
+                    <select
+                        name="sortBy"
+                        id="sortBy"
+                        placeholder="By name (asc/desc)"
+                        value={inputs?.sortBy}
+                        onChange={(e) => setInputs({ ...inputs, sortBy: e.target.value })}
                     >
-                     <option>By name (asc/desc)</option>
+                        <option>By name (asc/desc)</option>
                         <option value="asc">asc</option>
-                        <option value="desc">desc</option>  
+                        <option value="desc">desc</option>
                     </select>
                 </div>
             </div>
@@ -55,13 +70,14 @@ const SearchBar = () => {
                 <div>
                     <label htmlFor="race">Race: </label>
 
-                    <select 
-                    name="race" 
-                    value={inputs?.race}
-                    onChange={(e) => setInputs({ ...inputs, race: e.target.value})}
-                    id="race" 
-                    placeholder="list of race, multiselection"
-                    multiple
+                    <select
+                        name="race"
+                        value={inputs?.race}
+                        onChange={handleChange}
+                        // onChange={(e) => setInputs({ ...inputs, race: e.target.value})}
+                        id="race"
+                        placeholder="list of race, multiselection"
+                        multiple={true}
                     >
                         <option value="Hobbit">Hobbit</option>
                         <option value="Human">Human</option>
@@ -70,13 +86,19 @@ const SearchBar = () => {
                     </select>
                 </div>
                 <div>
-                    <label htmlFor="cars">Gender </label>
+                    <label htmlFor="cars">Gender: </label>
 
-                    <select name="cars" id="cars" placeholder="male/female/any">
-                        <option value="volvo">volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="mercedes">Mercedes</option>
-                        <option value="audi">Audi</option>
+                    <select 
+                    name="gender" 
+                    id="cars" 
+                    placeholder="male/female/any"
+                    value={inputs?.gender}
+                    onChange={(e) => setInputs({ ...inputs, gender: e.target.value })}
+                    >
+                        <option >male/female/any</option>
+                        <option value="male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="">Any</option>
                     </select>
                 </div>
                 <button onClick={findCustomizedCharacters}>Submit</button>

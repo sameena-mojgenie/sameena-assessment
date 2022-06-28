@@ -12,9 +12,9 @@ export function setData(name, value) {
     }
 }
 
-export const listAllBooks = (name, sortBy, race) => (dispatch) => {
+export const listAllBooks = (name, sortBy, race, gender) => (dispatch) => {
     dispatch({ type: 'SET_DATA', payload: {  books_loader: true } })
-    axios.get(`/character?limit=5&name=${name}&sort=name:${sortBy}&race=${race}`)
+    axios.get(`/character?limit=5&name=${name}&sort=name:${sortBy}&race=${race}&gender=${gender}`)
         .then(res => {
             // console.log(res.data);
             // console.log("PRINTED")
